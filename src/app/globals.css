@@ -26,6 +26,46 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.centeredflex{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+}
+.glassbg{
+  background-color: rgba(209, 213, 219, 0.35);
+
+}
+.divider-horizontal {
+  height: 2px;
+  width: 100%;
+  background-color: rgba(50, 51, 53, 0.459); /* This is the equivalent of bg-neutral-600 with bg-opacity-55 */
+}
+.divider-vertical {
+  width: 2px;
+  /* height: 100%; */
+  background-color: rgba(50, 51, 53, 0.459); /* This is the equivalent of bg-neutral-600 with bg-opacity-55 */
+}
+.greenstripe{
+  background-color: rgba(100, 255, 100, 0.35);
+}
+.image-container {
+  position: relative;
+  width: 48px; /* 12 * 4 (tailwindcss: h-12 w-12) */
+  height: 48px; /* 12 * 4 (tailwindcss: h-12 w-12) */
+}
+
+.rounded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%; /* tailwindcss: rounded-full */
+  position: absolute; /* tailwindcss: absolute */
+}
+
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
