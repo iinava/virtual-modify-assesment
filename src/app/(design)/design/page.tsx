@@ -1,16 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { FaBell,FaCoins } from "react-icons/fa";
-import { CiCirclePlus,CiLocationArrow1 } from "react-icons/ci";
+import { FaBell, FaCoins } from "react-icons/fa";
+import { CiCirclePlus, CiLocationArrow1 } from "react-icons/ci";
 import Card from "@/Components/Card";
 import AvatarGroup from "@/Components/AvatarGroup";
 import CustomComponent from "@/Components/Progressbar";
 import LineChart from "@/Components/Chart";
 import Table from "@/Components/Table";
-import { ProgressbarData ,cardData ,items} from "@/constants";
+import { ProgressbarData, cardData, items } from "@/constants";
+
 export default function Designpage() {
-  
- 
   const [selected, setSelected] = useState(items[0]);
 
   const handleClick = (item: any) => {
@@ -18,9 +17,9 @@ export default function Designpage() {
   };
   return (
     <main className="w-full flex flex-col ">
-      <div className="w-full  bg-green-900 flex flex-col p-4">
-        <nav className="flex justify-between px-2 flex-wrap py-4  ">
-          <div>
+        <nav className="flex justify-between bg-green-900 px-2 flex-wrap py-2 ">
+          <div className="flex justify-center items-center">
+            <img  className=" w-14 sm:w-20" src="/ssstar.svg" alt="icon" />
             <h1 className="text-4xl">Creative space</h1>
           </div>
           <div className="flex gap-4 items-center">
@@ -43,6 +42,8 @@ export default function Designpage() {
             </button>
           </div>
         </nav>
+      <div className="w-full  bg-green-900 flex flex-col p-4">
+      
         <div className=" w-full  flex gap-4 flex-wrap items-center justify-between   px-2">
           <div className="flex flex-col gap-4  w-[250px] ">
             {items.map((item, index) => (
@@ -83,9 +84,8 @@ export default function Designpage() {
           <div className="flex justify-between items-center text-black text-2xl">
             <h1 className="text-sm">Team Activity</h1>
             <AvatarGroup />
-            <div className="flex">
+            <div className="flex gap-2">
               <button className="h-9 w-9 bg-yellow-400 rounded-full centeredflex">
-                {" "}
                 <CiCirclePlus />
               </button>
               <button className="h-9 w-9  rounded-full">
@@ -120,7 +120,7 @@ export default function Designpage() {
           <LineChart />
           <div className="divider-horizontal mt-2"></div>
 
-        <Table/>
+          <Table />
         </div>
       </div>
     </main>

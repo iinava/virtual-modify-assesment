@@ -27,7 +27,7 @@ const ResponsiveBarChart = () => {
       }}
     >
       <XAxis dataKey="name" />
-      <YAxis />
+      {/* <YAxis /> */}
       <Tooltip shared={false} trigger="click"  />
       <Bar dataKey="pv" fill="#8884d8" />
       <Bar dataKey="trb" fill="#82ca9d" />

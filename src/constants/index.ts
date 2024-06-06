@@ -82,9 +82,9 @@ export  const ProgressbarData = [
     {
       imageSrc:
         "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      color: "blue",
+      color: "black",
       width: "80%",
-      Icon: GoSun,
+      Icon: GoNorthStar,
       name: "wonder wave",
     },
   ];
