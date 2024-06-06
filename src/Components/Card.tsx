@@ -1,15 +1,5 @@
 import React from 'react';
-import { IconType } from 'react-icons';
-import { TfiGallery } from 'react-icons/tfi';
-
-interface CardProps {
-  icon: IconType;
-  title: string;
-  count: number;
-  total: string;
-  available: string;
-  used: string;
-}
+import { CardProps } from '@/constants/types';
 
 const DividerHorizontal: React.FC = () => (
   <div className="w-full h-[2px] bg-neutral-600 bg-opacity-55 my-2"></div>
@@ -21,7 +11,7 @@ const DividerVertical: React.FC = () => (
 
 export default function Card({ icon: Icon, title, count, total, available, used }: CardProps) {
   return (
-    <div className="w-[300px] h-[300px] glassbg px-3 py-2 rounded-sm">
+    <div className="w-[300px] h-[300px] glassbg px-3 py-2 rounded-md">
       <div className="flex flex-col justify-start space-y-4">
         <div className="bg-green-800 h-14 w-14 rounded-full centeredflex text-yellow-300 text-2xl">
           <Icon />

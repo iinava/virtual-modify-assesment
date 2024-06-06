@@ -1,99 +1,25 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
-import { FaBell } from "react-icons/fa";
-import { TfiGallery } from "react-icons/tfi";
-import { CiVideoOn } from "react-icons/ci";
-import { CiMusicNote1 } from "react-icons/ci";
-import { CiCirclePlus } from "react-icons/ci";
-import { CiLocationArrow1 } from "react-icons/ci";
-import { FaCoins } from "react-icons/fa";
-import { GoSun } from "react-icons/go";
-import { IoSparkles } from "react-icons/io5";
-import { GoNorthStar } from "react-icons/go";
+import { FaBell,FaCoins } from "react-icons/fa";
+import { CiCirclePlus,CiLocationArrow1 } from "react-icons/ci";
 import Card from "@/Components/Card";
 import AvatarGroup from "@/Components/AvatarGroup";
 import CustomComponent from "@/Components/Progressbar";
+import LineChart from "@/Components/Chart";
+import Table from "@/Components/Table";
+import { ProgressbarData ,cardData ,items} from "@/constants";
 export default function Designpage() {
-  const items = [
-    "Dashboard",
-    "Storage",
-    "Collection",
-    "Collaboration",
-    "Analytics",
-    "Trash",
-    "Settings",
-  ];
-  const ProgressbarData = [
-    {
-      imageSrc:
-        "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      color: "green",
-      width: "60%",
-      Icon: GoNorthStar,
-      name: "wisky words",
-    },
-    {
-      imageSrc:
-        "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      color: "red",
-      width: "50%",
-      Icon: IoSparkles,
-      name: "Doodle worse",
-    },
-    {
-      imageSrc:
-        "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      color: "blue",
-      width: "20%",
-      Icon: GoSun,
-      name: "Sparkle craft",
-    },
-    {
-      imageSrc:
-        "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      color: "blue",
-      width: "80%",
-      Icon: GoSun,
-      name: "wonder wave",
-    },
-  ];
-
-  const cardData = [
-    {
-      icon: TfiGallery,
-      title: "Pictures",
-      count: 6455,
-      total: "100 Gb",
-      available: "43 Gb",
-      used: "57 Gb",
-    },
-    {
-      icon: CiVideoOn,
-      title: "Videos",
-      count: 235,
-      total: "200 Gb",
-      available: "150 Gb",
-      used: "50 Gb",
-    },
-    {
-      icon: CiMusicNote1,
-      title: "Music",
-      count: 1234,
-      total: "50 Gb",
-      available: "20 Gb",
-      used: "30 Gb",
-    },
-  ];
+  
+ 
   const [selected, setSelected] = useState(items[0]);
 
   const handleClick = (item: any) => {
     setSelected(item);
   };
   return (
-    <div className="w-full flex flex-col ">
+    <main className="w-full flex flex-col ">
       <div className="w-full  bg-green-900 flex flex-col p-4">
-        <div className="flex justify-between p-2 flex-wrap ">
+        <nav className="flex justify-between px-2 flex-wrap py-4  ">
           <div>
             <h1 className="text-4xl">Creative space</h1>
           </div>
@@ -116,7 +42,7 @@ export default function Designpage() {
               join
             </button>
           </div>
-        </div>
+        </nav>
         <div className=" w-full  flex gap-4 flex-wrap items-center justify-between   px-2">
           <div className="flex flex-col gap-4  w-[250px] ">
             {items.map((item, index) => (
@@ -143,7 +69,7 @@ export default function Designpage() {
             />
           ))}
 
-          <div className="w-[150px] h-[300px] glassbg  flex flex-col justify-start items-center">
+          <div className="w-[150px] h-[300px] glassbg  flex flex-col justify-start items-center rounded-md">
             <div className="mt-20">
               <p>used space</p>
               <h1 className="text-3xl text-yellow-300">64.2%</h1>
@@ -152,7 +78,7 @@ export default function Designpage() {
           </div>
         </div>
       </div>
-      <div className="w-full md:grid md:grid-cols-3  bg-neutral-200 ">
+      <div className="w-full md:grid md:grid-cols-3  bg-white px-3 ">
         <div className="  p-3">
           <div className="flex justify-between items-center text-black text-2xl">
             <h1 className="text-sm">Team Activity</h1>
@@ -181,17 +107,22 @@ export default function Designpage() {
             ))}
           </div>
         </div>
-        <div className=" h-[300px] col-span-2 text-black p-4">
+        <div className="  col-span-2 text-black p-4">
           <div className="flex justify-between w-full">
             <p>Revenue</p>
-            <button className="rounded-full glassbg centeredflex  h-8 w-8"><FaCoins /></button>
+            <button className="rounded-full glassbg centeredflex  h-8 w-8">
+              <FaCoins />
+            </button>
           </div>
           <div className="divider-horizontal mt-2"></div>
-        <p>Memory usage</p>
-        <h1 className="text-4xl">2345 TB</h1>
+          <p>Memory usage</p>
+          <h1 className="text-4xl">57,2 trb</h1>
+          <LineChart />
+          <div className="divider-horizontal mt-2"></div>
 
+        <Table/>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
