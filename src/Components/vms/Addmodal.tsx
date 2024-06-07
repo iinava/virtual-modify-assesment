@@ -1,8 +1,11 @@
 "use client";
 import axios from "axios";
 import React, { ChangeEvent, useState } from "react";
+import { VendorData, AddModalProps } from "@/constants/types";
+import { validationSchema } from "@/constants/schema";
+import { z } from "zod";
 
-export default function Addmodal() {
+export default function AddModal({ setVendors }: AddModalProps) {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -11,38 +14,64 @@ export default function Addmodal() {
     phone: "",
     address: "",
   });
+  const [errors, setErrors] = useState({
+    name: "",
+    age: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log(formData);
   };
 
-  const handleSubmit = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    
     setIsLoading(true);
     try {
-      const response = await axios.post(`/api/vendors/add`,formData);
-      console.log(response);
-    } catch (error) {
-      console.error("Error adding vendor", error);
-    } finally {
-      setIsLoading(false);
-
-    }
-    setShowModal(false);
-    setFormData({
+      const parsedData = validationSchema.parse({
+        ...formData,
+        age: Number(formData.age),
+      });
+      setErrors({
         name: "",
         age: "",
         email: "",
         phone: "",
         address: "",
       });
+
+      const response = await axios.post(`/api/vendors/add`, parsedData);
+      const newVendor = response.data.data;
+      setVendors((prevVendors) => [...prevVendors, newVendor]);
+      setIsLoading(false);
+      setShowModal(false);
+      setFormData({
+        name: "",
+        age: "",
+        email: "",
+        phone: "",
+        address: "",
+      });
+    } catch (validationErrors) {
+      if (validationErrors instanceof z.ZodError) {
+        const tempErrors = validationErrors.errors.reduce(
+          (acc, error) => ({ ...acc, [error.path[0]]: error.message }),
+          {}
+        );
+        setErrors(tempErrors as any);
+      } else {
+        console.error("Error adding vendor", validationErrors);
+      }
+    }finally{
+      setIsLoading(false)
+    }
   };
 
   return (
@@ -58,8 +87,8 @@ export default function Addmodal() {
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="border border-neutral-800 rounded-lg shadow-lg relative flex flex-col w-full bg-black  outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5  rounded-t">
+              <div className="border border-neutral-800 rounded-lg shadow-lg relative flex flex-col w-full bg-black outline-none focus:outline-none">
+                <div className="flex items-start justify-between p-5 rounded-t">
                   <h3 className="text-3xl font-semibold">Add</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -72,7 +101,7 @@ export default function Addmodal() {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex flex-col justify-center items-center">
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <div className="max-w-sm space-y-3">
                       <input
                         type="text"
@@ -82,6 +111,9 @@ export default function Addmodal() {
                         value={formData.name}
                         onChange={handleChange}
                       />
+                      {errors.name && (
+                        <p className="text-red-500">{errors.name}</p>
+                      )}
                       <input
                         type="number"
                         className="custom-input"
@@ -90,6 +122,9 @@ export default function Addmodal() {
                         value={formData.age}
                         onChange={handleChange}
                       />
+                      {errors.age && (
+                        <p className="text-red-500">{errors.age}</p>
+                      )}
                       <input
                         type="text"
                         className="custom-input"
@@ -98,14 +133,20 @@ export default function Addmodal() {
                         value={formData.email}
                         onChange={handleChange}
                       />
+                      {errors.email && (
+                        <p className="text-red-500">{errors.email}</p>
+                      )}
                       <input
-                        type="number"
+                        type="text"
                         className="custom-input"
                         placeholder="Enter Phone Number"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
                       />
+                      {errors.phone && (
+                        <p className="text-red-500">{errors.phone}</p>
+                      )}
                       <input
                         type="text"
                         className="custom-input"
@@ -114,25 +155,25 @@ export default function Addmodal() {
                         value={formData.address}
                         onChange={handleChange}
                       />
-                      {/* <button onClick={handleSubmit}>
-                        add
-                      </button> */}
+                      {errors.address && (
+                        <p className="text-red-500">{errors.address}</p>
+                      )}
                     </div>
                     <div className="flex items-center justify-end p-6 rounded-b">
                       <button
-                        className=" background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        className="background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
-                        onClick={() => {
-                          setShowModal(false);
-                        }}
+                        onClick={() => setShowModal(false)}
                       >
                         Cancel
                       </button>
                       <button
-                        onClick={(e: any) => handleSubmit(e)}
+                        type="submit"
                         className="bg-white text-black active:bg-blue-300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       >
-                        Add
+                     {
+                      isLoading ? "Loading..." : "Add"
+                     }
                       </button>
                     </div>
                   </form>

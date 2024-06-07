@@ -3,11 +3,9 @@ import Addmodal from "@/Components/vms/Addmodal";
 import VentorTable from "@/Components/vms/VentorTable";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-
+import { VendorData } from "@/constants/types";
 export default function Homepage() {
-  console.log("home");
-
-  const [vendors, setVendors] = useState(null);
+  const [vendors, setVendors] = useState<VendorData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,10 +16,9 @@ export default function Homepage() {
 
       try {
         const response = await axios.get("/api/vendors/getall");
-        console.log(response.data.data);
+        // console.log(response.data.data);
 
         setVendors(response.data.data || []);
-        console.log(vendors, "i am here");
       } catch (error) {
         console.error("Error fetching vendors:", error);
       } finally {
@@ -39,9 +36,9 @@ export default function Homepage() {
       {isLoading && <p>Loading vendors...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
-      {vendors ? <VentorTable vendors={vendors} /> : "no vendors"}
+      {vendors ? <VentorTable vendors={vendors} setVendors={setVendors} /> : "no vendors"}
       <div>
-        <Addmodal/>
+        <Addmodal setVendors={setVendors}/>
       </div>
     </div>
   );

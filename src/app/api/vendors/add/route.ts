@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const vendor = await prisma.vendor.create({
       data: { name, email, age: ageInt, address, phone },
     });
-    return NextResponse.json(vendor, { status: 201 });
+    return NextResponse.json({data:vendor}, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to create vendor" },
