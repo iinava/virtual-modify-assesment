@@ -2,7 +2,7 @@ import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function PUT(request: Request) {
-  console.log("endpoint hit put ");
+  // console.log("endpoint hit put ");
 
   const { id, name, email, age, address, phone } = await request.json();
   console.log(id, name, email, age, address, phone);

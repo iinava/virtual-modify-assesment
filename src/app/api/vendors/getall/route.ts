@@ -2,7 +2,7 @@ import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export  async function GET(request: Request) {
-    console.log("hit get");
+    // console.log("hit get");
     
   try {
     const vendors = await prisma.vendor.findMany();

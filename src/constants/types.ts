@@ -25,3 +25,7 @@ export interface VendorData {
 export interface AddModalProps {
     setVendors: React.Dispatch<React.SetStateAction<VendorData[]>>;
   }
+export interface UpdateModalProps {
+  id: string;
+  setVendors: React.Dispatch<React.SetStateAction<VendorData[]>>;
+};

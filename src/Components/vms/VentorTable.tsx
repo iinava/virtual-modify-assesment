@@ -93,7 +93,7 @@ export default function VentorTable({ vendors,setVendors }: VentorTableProps) {
                       {vendor.address}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                      <UpdateModal/>
+                      <UpdateModal setVendors={setVendors} id={vendor.id}/>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                       <button

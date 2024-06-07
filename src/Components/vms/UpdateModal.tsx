@@ -3,8 +3,9 @@ import axios from "axios";
 import React, { ChangeEvent, useState } from "react";
 import { validationSchema } from "@/constants/schema";
 import { z } from "zod";
+import {  UpdateModalProps } from "@/constants/types";
 
-export default function UpdateModal() {
+export default function UpdateModal({ id, setVendors }: UpdateModalProps) {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -38,6 +39,10 @@ export default function UpdateModal() {
         ...formData,
         age: Number(formData.age),
       });
+      const dataToSend = {
+        ...parsedData,
+        id,
+      };
       setErrors({
         name: "",
         age: "",
@@ -45,9 +50,14 @@ export default function UpdateModal() {
         phone: "",
         address: "",
       });
+      // console.log(dataToSend);
 
-      const response = await axios.post(`/api/vendors/add`, parsedData);
+      const response = await axios.put(`/api/vendors/updateVendor`, dataToSend);
       const newVendor = response.data.data;
+      setVendors((prevVendors) =>
+        prevVendors.map((vendor) => (vendor.id === id ? newVendor : vendor))
+      );
+
       setIsLoading(false);
       setShowModal(false);
       setFormData({
@@ -67,17 +77,30 @@ export default function UpdateModal() {
       } else {
         console.error("Error adding vendor", validationErrors);
       }
-    }finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchvendorByid = async (id: string) => {
+    try {
+      const response = await axios.get(`/api/vendors/getById/${id}`);
+      console.log(response, "loaded vendor");
+      setFormData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching vendor:", error);
     }
   };
 
   return (
     <>
       <button
-      className="text-blue-800 hover:text-blue-300"
+        className="text-blue-800 hover:text-blue-300"
         type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() => {
+          setShowModal(true);
+          fetchvendorByid(id);
+        }}
       >
         Edit
       </button>
@@ -169,9 +192,7 @@ export default function UpdateModal() {
                         type="submit"
                         className="bg-white text-black active:bg-blue-300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       >
-                     {
-                      isLoading ? "Loading..." : "Update"
-                     }
+                        {isLoading ? "Loading..." : "Update"}
                       </button>
                     </div>
                   </form>
