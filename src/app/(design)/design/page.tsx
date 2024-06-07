@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import { FaBell, FaCoins } from "react-icons/fa";
 import { CiCirclePlus, CiLocationArrow1 } from "react-icons/ci";
-import Card from "@/Components/Card";
-import AvatarGroup from "@/Components/AvatarGroup";
-import CustomComponent from "@/Components/Progressbar";
-import LineChart from "@/Components/Chart";
-import Table from "@/Components/Table";
+import Card from "@/Components/design/Card";
+import AvatarGroup from "@/Components/design/AvatarGroup";
+import CustomprogressBar from "@/Components/design/Progressbar";
+import LineChart from "@/Components/design/Chart";
+import Table from "@/Components/design/Table";
 import { ProgressbarData, cardData, items } from "@/constants";
 
 export default function Designpage() {
@@ -96,7 +96,7 @@ export default function Designpage() {
           <div className="divider-horizontal mt-2 "></div>
           <div className="py-4">
             {ProgressbarData.map((item, index) => (
-              <CustomComponent
+              <CustomprogressBar
                 key={index}
                 imageSrc={item.imageSrc}
                 color={item.color}
@@ -118,6 +118,7 @@ export default function Designpage() {
           <p>Memory usage</p>
           <h1 className="text-4xl">57,2 trb</h1>
           <LineChart />
+          
           <div className="divider-horizontal mt-2"></div>
 
           <Table />

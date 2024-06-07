@@ -8,8 +8,8 @@ interface CustomComponentProps {
     Icon: React.ComponentType;
   }
 
-const CustomComponent: React.FC<CustomComponentProps> = ({ imageSrc, color, width, Icon,name }) => {
-    console.log(color);
+const CustomprogressBar: React.FC<CustomComponentProps> = ({ imageSrc, color, width, Icon,name }) => {
+    // console.log(color);
     
   return (
     <div className="flex flex-col text-black  my-2 ">
@@ -35,4 +35,4 @@ const CustomComponent: React.FC<CustomComponentProps> = ({ imageSrc, color, widt
   );
 };
 
-export default CustomComponent;
+export default CustomprogressBar;
